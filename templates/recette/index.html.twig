@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette index{% endblock %}
+
+{% block body %}
+    <h1>Recette index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Slug</th>
+                <th>Temps</th>
+                <th>NbPersonne</th>
+                <th>Difficulté</th>
+                <th>Description</th>
+                <th>Prix</th>
+                <th>Favorie</th>
+                <th>DateCreation</th>
+                <th>DateMiseaJour</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}
+            <tr>
+                <td>{{ recette.id }}</td>
+                <td>{{ recette.nom }}</td>
+                <td>{{ recette.slug }}</td>
+                <td>{{ recette.temps }}</td>
+                <td>{{ recette.nbPersonne }}</td>
+                <td>{{ recette.difficulté }}</td>
+                <td>{{ recette.description }}</td>
+                <td>{{ recette.prix }}</td>
+                <td>{{ recette.favorie ? 'Yes' : 'No' }}</td>
+                <td>{{ recette.dateCreation ? recette.dateCreation|date('Y-m-d') : '' }}</td>
+                <td>{{ recette.dateMiseaJour ? recette.dateMiseaJour|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_recette_show', {'id': recette.id}) }}">show</a>
+                    <a href="{{ path('app_recette_edit', {'id': recette.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recette_new') }}">Créer une nouvelle recette</a>
+{% endblock %}

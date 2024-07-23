@@ -1,39 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Index d'ingrédients{% endblock %}
+{% block title %}Index d'ingrédients
+{% endblock %}
 
 {% block body %}
-    <h1>Liste des ingrédients</h1>
+	<h1>Liste des ingrédients</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prix</th>
-                <th>CreateAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for ingredient in ingredients %}
-            <tr>
-                <td>{{ ingredient.id }}</td>
-                <td>{{ ingredient.nom }}</td>
-                <td>{{ ingredient.prix }}</td>
-                <td>{{ ingredient.createAt ? ingredient.createAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_ingredient_show', {'id': ingredient.id}) }}">show</a>
-                    <a href="{{ path('app_ingredient_edit', {'id': ingredient.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Prix</th>
+				<th>CreateAt</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for ingredient in ingredients %}
+				<tr>
+					<td>{{ ingredient.id }}</td>
+					<td>{{ ingredient.nom }}</td>
+					<td>{{ ingredient.prix }}</td>
+					<td>{{ ingredient.createAt ? ingredient.createAt|date('Y-m-d H:i:s') : '' }}</td>
+					<td>
+						<a href="{{ path('app_ingredient_edit', {'id': ingredient.id}) }}">Modifier</a>
+					</td>
+					<td>
+						<form action={{ path('admin_ingredient_delete' , { 'id' : ingredient.id} )}} methode="POST">
+							<input type="hidden" name="_method" values="DELETE">
+							<button class='btn btn-danger'>Supprimer</button>
+						</form>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_ingredient_new') }}">Create new</a>
+	<a href="{{ path('app_ingredient_new') }}">Créer un nouvel ingrédient</a>
 {% endblock %}
