@@ -21,6 +21,7 @@ class IngredientFixtures extends Fixture
             $ingredient->setPrix($faker->randomFloat(1, 1, 200));
             $ingredient->setCreateAt(new DateTimeImmutable());
             $manager->persist($ingredient);
+            $this->addReference('INGREDIENT' . $i , $ingredient);
         }
 
         $manager->flush();

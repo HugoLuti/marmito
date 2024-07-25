@@ -52,9 +52,9 @@ class Recette
     #[Assert\NotBlank(message: 'Veuillez selectionner le niveau de difficulté')]
     private ?int $difficulte = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: TYPES::TEXT)]
     #[Assert\NotBlank(message: 'Veuillez remplir la {{ label }}')]
-    private ?TextType $description = null;
+    private ?string $description = null;
 
     #[ORM\Column]
     #[Assert\Range(min: 0, max: 1000, notInRangeMessage: 'Veuillez indiqué un prix entre {{ min }} euro et {{ max }} euro')]
@@ -63,6 +63,9 @@ class Recette
 
     #[ORM\Column]
     private ?bool $favorie = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $fileName = null;
 
     #[ORM\PrePersist]
     public function setdateCreationAt()
@@ -73,7 +76,7 @@ class Recette
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $dateCreation = null;
 
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $dateMiseaJour = null;
 
     /**
@@ -235,4 +238,17 @@ class Recette
 
         return $this;
     }
+
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileName(?string $fileName): static
+    {
+        $this->fileName = $fileName;
+
+        return $this;
+    }
 }
+

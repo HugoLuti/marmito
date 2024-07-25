@@ -2,11 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Ingredient;
 use App\Entity\Recette;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -15,6 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+
 
 class RecetteType extends AbstractType
 {
@@ -55,6 +59,17 @@ class RecetteType extends AbstractType
                 'required' => false
             ])
             ->add('favorie', CheckboxType::class, [
+                'required' => false
+            ])
+            ->add('ingredients', EntityType::class, [
+                'class' => Ingredient::class,
+                'choice_label' => 'nom',
+                'multiple' => true,
+                'required' => false,
+                'expanded' => true
+            ])
+            ->add('Fichier', FileType::class, [
+                'mapped' => false,
                 'required' => false
             ])
             ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...));
